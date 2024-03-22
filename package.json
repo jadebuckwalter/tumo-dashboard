@@ -1,0 +1,17 @@
+{
+    "name": "tumo-dashboard",
+    "version": "1.0.0",
+    "description": "Dashboard for TUMO student profiles",
+    "main": "index.js",
+    "repository": "github:jadebuckwalter/tumo-dashboard",
+    "author": "Jade Buckwalter",
+    "license": "MIT",
+    "scripts": {
+      "start": "node serve.js"
+    },
+    "dependencies": {
+      "dotenv": "^10.0.0",
+      "express": "^4.17.1",
+      "mysql": "^2.18.1"
+    }
+  }
