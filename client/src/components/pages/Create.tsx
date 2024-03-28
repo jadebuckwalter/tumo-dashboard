@@ -1,8 +1,14 @@
 import React from "react";
+import NavBar from "../modules/NavBar";
+import Profile from "../modules/Profile";
 
 const Create = () => {
     return (
-        <h1>Create</h1>
+        <div>
+            <h1 className="text-6xl p-5 text-center">Create Profile</h1>
+            <NavBar/>
+            <Profile/>
+        </div>
     );
 }
 

@@ -5,7 +5,10 @@ const outputDir = path.resolve(__dirname, "client", "dist");
 const webpack = require("webpack");
 
 module.exports = {
-  	entry: [entryFile],
+	mode: "development",
+  	entry: {
+		app: entryFile,
+	},
   	output: {
 		path: outputDir,
 		publicPath: "/",
@@ -34,12 +37,13 @@ module.exports = {
 		],
   	},
 	resolve: {
-		extensions: ["*", ".js", ".jsx", ".ts", ".tsx"],
+		extensions: [".*", ".js", ".jsx", ".ts", ".tsx"],
 	},
-	plugins: [new webpack.HotModuleReplacementPlugin()],
+	// plugins: [new webpack.HotModuleReplacementPlugin()],
 	devServer: {
 		historyApiFallback: true,
 		static: "./client/dist",
+		// hot: true,
 		proxy: [{
 			context: ["/api"],
 			target: "http://localhost:3000"
