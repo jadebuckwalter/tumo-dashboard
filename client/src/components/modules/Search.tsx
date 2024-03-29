@@ -3,28 +3,44 @@ import { post } from "../../utils";
 
 type Props = {
     searchBy: string;
-    setId: Function;
+    setStudent: Function;
 }
 
-// Change everything to be in uppercase
-const Search = ({searchBy, setId}: Props) => {
+const Search = ({searchBy, setStudent}: Props) => {
     const [name, setName] = useState("");
-    const [student, setStudent] = useState({});
 
     const processInput = () => {
         if (searchBy === "username") {
-            post("/api/search-username", {username: name}).then((s) => {console.log(s); setId(s.id); setStudent(s)});
+            post("/api/search-username", {username: name}).then((s) => {
+                setStudent(s);
+                checkFound(s);
+            });
         } else if (searchBy === "full name") {
-            post("/api/search-name", {name: name}).then((s) => {setStudent(s)});
+            post("/api/search-name", {name: name}).then((s) => {
+                setStudent(s);
+                checkFound(s);
+            });
         }
     };
 
+    const checkFound = (s) => {
+        const notFound = document.getElementById("notFound");
+        if (s.length === 0) {
+            if (notFound !== null) {
+                notFound.style.display = "block";
+            }
+        } else {
+            if (notFound !== null) {
+                notFound.style.display = "none";
+            }
+        }
+    }
+
     return (
         <div className="flex flex-col items-center">
-            <form onSubmit={async (e) => {
+            <form onSubmit={(e) => {
                 e.preventDefault();
-                await processInput();
-                console.log(student);
+                processInput();
             }}>
                 <div className="p-2">
                     <label className="m-1">Search by {searchBy}:</label>
@@ -32,6 +48,7 @@ const Search = ({searchBy, setId}: Props) => {
                     <input className="border-2 border-slate-500 rounded px-1 m-1 cursor-pointer" type="submit" value="Enter"></input>
                 </div>
             </form>
+            <div className="text-center p-2 text-red-500" style={{display: "none"}} id="notFound">User not found; try again.</div>
         </div>
     );
 };

@@ -1,18 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { post } from "../../utils";
 
 // Form type is either "create" or "edit"
 type Props = {
     formType: string;
-    id: number;
+    student: Array<JSON>;
 }
 
-const Profile = ({formType, id}: Props) => {
+const Profile = ({formType, student}: Props) => {
     const [first, setFirst] = useState("");
     const [last, setLast] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
+    const [id, setId] = useState(0);
+    
+    useEffect(() => {
+        if (formType === "edit" && student.length > 0) {
+            const vals = Object.values(student[0]);
+            setId(vals[0]);
+            setFirst(vals[1]);
+            setLast(vals[2]);
+            setUsername(vals[3]);
+            setPassword(vals[4]);
+            setEmail(vals[5]);
+        }
+    }, [student]);
 
     return (
         <div>
@@ -29,7 +42,6 @@ const Profile = ({formType, id}: Props) => {
                     // Show confirmation
                     const confirmation = document.getElementById("submitted");
                     if (confirmation !== null) {
-                        console.log("found");
                         confirmation.style.display = "block";
                     }
                     // Clear fields
@@ -38,6 +50,7 @@ const Profile = ({formType, id}: Props) => {
                     setEmail("");
                     setUsername("");
                     setPassword("");
+                    setId(0);
                 }}>
                     <div className="p-2">
                         <label htmlFor="first">First name: </label>
