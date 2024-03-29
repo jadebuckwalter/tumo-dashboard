@@ -11,7 +11,9 @@ const Edit = () => {
             <h1 className="text-6xl p-5 text-center">Edit Profile</h1>
             <NavBar/>
             <Search searchBy={"username"} setStudent={setStudent}/>
-            <Profile formType="edit" student={student}/>
+            <div id="editProfile" style={{display: "none"}}>
+                <Profile formType="edit" student={student}/>
+            </div>
         </div>
     );
 }

@@ -28,30 +28,59 @@ const Profile = ({formType, student}: Props) => {
         }
     }, [student]);
 
+    // Check to see if the username is already taken; we want usernames to be unique
+    const checkUsername = () => {
+        post("/api/search-username", {username: username}).then((s) => {
+            // Username is unique
+            if ((formType === "edit" && s.length === 1 && s[0].id === id) || s.length === 0) {
+                submitForm();
+            } else {
+                showMessages(false);
+            }
+        })
+    }
+
+    // Submit the form on success
+    const submitForm = () => {
+        if (formType === "create") {
+            post("/api/create-profile", {first: first, last: last, username: username, password: password, email: email});
+        } else if (formType === "edit") {
+            post("/api/edit-profile", {first: first, last: last, username: username, password: password, email: email, id: id});
+        }
+        // Show confirmation
+        showMessages(true);
+        // Clear fields
+        setFirst("");
+        setLast("");
+        setEmail("");
+        setUsername("");
+        setPassword("");
+        setId(0);
+    }
+
+    // Show the success and error messages. success is a boolean value.
+    const showMessages = (success) => {
+        const confirmation = document.getElementById("submitted");
+        const notUnique = document.getElementById("notUnique");
+        if (confirmation !== null && notUnique !== null) {
+            if (success) {
+                confirmation.style.display = "block";
+                notUnique.style.display = "none";
+            } else {
+                confirmation.style.display = "none";
+                notUnique.style.display = "block";
+            }
+        }
+    }
+
     return (
         <div>
+            <div className="text-center p-2 text-red-500" style={{display: "none"}} id="notUnique">Choose a unique username.</div>
             <div className="text-center p-2 text-green-500" style={{display: "none"}} id="submitted">Submitted!</div>
             <div className="flex flex-col items-center border-2 border-slate-500 rounded-lg p-6 m-8">
                 <form onSubmit={(e) => {
                     e.preventDefault();
-                    // Submit form
-                    if (formType === "create") {
-                        post("/api/create-profile", {first: first, last: last, username: username, password: password, email: email});
-                    } else if (formType === "edit") {
-                        post("/api/edit-profile", {first: first, last: last, username: username, password: password, email: email, id: id});
-                    }
-                    // Show confirmation
-                    const confirmation = document.getElementById("submitted");
-                    if (confirmation !== null) {
-                        confirmation.style.display = "block";
-                    }
-                    // Clear fields
-                    setFirst("");
-                    setLast("");
-                    setEmail("");
-                    setUsername("");
-                    setPassword("");
-                    setId(0);
+                    checkUsername();
                 }}>
                     <div className="p-2">
                         <label htmlFor="first">First name: </label>

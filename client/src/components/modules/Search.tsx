@@ -22,13 +22,16 @@ const Search = ({searchBy, setStudent}: Props) => {
     // Determine whether a student is found
     const checkFound = (s) => {
         const notFound = document.getElementById("notFound");
+        const editProfile = document.getElementById("editProfile");
         if (s.length === 0) {
-            if (notFound !== null) {
+            if (notFound !== null && editProfile !== null) {
                 notFound.style.display = "block";
+                editProfile.style.display = "none";
             }
         } else {
-            if (notFound !== null) {
+            if (notFound !== null && editProfile !== null) {
                 notFound.style.display = "none";
+                editProfile.style.display = "block";
             }
         }
     }
