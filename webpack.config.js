@@ -2,8 +2,6 @@ const path = require("path");
 const entryFile = path.resolve(__dirname, "client", "src", "index.tsx");
 const outputDir = path.resolve(__dirname, "client", "dist");
 
-const webpack = require("webpack");
-
 module.exports = {
 	mode: "development",
   	entry: {
@@ -39,11 +37,9 @@ module.exports = {
 	resolve: {
 		extensions: [".*", ".js", ".jsx", ".ts", ".tsx"],
 	},
-	// plugins: [new webpack.HotModuleReplacementPlugin()],
 	devServer: {
 		historyApiFallback: true,
 		static: "./client/dist",
-		// hot: true,
 		proxy: [{
 			context: ["/api"],
 			target: "http://localhost:3000"
