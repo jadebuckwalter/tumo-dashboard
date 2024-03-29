@@ -1,18 +1,19 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import { post } from "../../utils";
 
 type Props = {
     searchBy: string;
+    setId: Function;
 }
 
 // Change everything to be in uppercase
-const Search = ({searchBy}: Props) => {
+const Search = ({searchBy, setId}: Props) => {
     const [name, setName] = useState("");
     const [student, setStudent] = useState({});
 
     const processInput = () => {
         if (searchBy === "username") {
-            post("/api/search-username", {username: name}).then((s) => {console.log(s); setStudent(s)});
+            post("/api/search-username", {username: name}).then((s) => {console.log(s); setId(s.id); setStudent(s)});
         } else if (searchBy === "full name") {
             post("/api/search-name", {name: name}).then((s) => {setStudent(s)});
         }

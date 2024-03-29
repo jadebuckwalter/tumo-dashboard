@@ -7,7 +7,7 @@ const Create = () => {
         <div>
             <h1 className="text-6xl p-5 text-center">Create Profile</h1>
             <NavBar/>
-            <Profile/>
+            <Profile formType="create" id={0}/>
         </div>
     );
 }
