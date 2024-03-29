@@ -15,6 +15,7 @@ const Profile = ({formType, student}: Props) => {
     const [email, setEmail] = useState("");
     const [id, setId] = useState(0);
     
+    // Fill in the values for the student in the profile, if applicable
     useEffect(() => {
         if (formType === "edit" && student.length > 0) {
             const vals = Object.values(student[0]);

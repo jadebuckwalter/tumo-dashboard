@@ -9,20 +9,17 @@ type Props = {
 const Search = ({searchBy, setStudent}: Props) => {
     const [name, setName] = useState("");
 
-    const processInput = () => {
+    // Get the Promise based on what is being searched
+    const getOutput = () => {
         if (searchBy === "username") {
-            post("/api/search-username", {username: name}).then((s) => {
-                setStudent(s);
-                checkFound(s);
-            });
-        } else if (searchBy === "full name") {
-            post("/api/search-name", {name: name}).then((s) => {
-                setStudent(s);
-                checkFound(s);
-            });
+            return post("/api/search-username", {username: name});
+        } else {
+            // Full name
+            return post("/api/search-name", {name: name});
         }
     };
 
+    // Determine whether a student is found
     const checkFound = (s) => {
         const notFound = document.getElementById("notFound");
         if (s.length === 0) {
@@ -40,7 +37,10 @@ const Search = ({searchBy, setStudent}: Props) => {
         <div className="flex flex-col items-center">
             <form onSubmit={(e) => {
                 e.preventDefault();
-                processInput();
+                getOutput().then((s) => {
+                    setStudent(s);
+                    checkFound(s);
+                });
             }}>
                 <div className="p-2">
                     <label className="m-1">Search by {searchBy}:</label>

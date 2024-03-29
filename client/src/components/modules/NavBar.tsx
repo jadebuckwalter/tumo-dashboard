@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-// The navigation bar at the top of all pages. Takes no props.
+// The navigation bar at the top of all pages
 const NavBar = () => {
     return (
         <div className="flex flex-col items-center bg-slate-300 w-full">
