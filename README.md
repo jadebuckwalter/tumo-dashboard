@@ -18,3 +18,7 @@ PORT=3000
 - Run `npm run build` to run the build script.
 - Run `npm run start` in one terminal window and `npm run front` in another terminal window.
 - Visit `localhost:5050` in your browser.
+
+## Notes
+- Usernames must be unique.
+- For now, passwords are stored as a regular field. In reality, they should be hashed before being put in the database, and should not be displayed, but for the purpose of this task, they are displayed in the table along with the other fields.
